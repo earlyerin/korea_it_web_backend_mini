@@ -1,6 +1,8 @@
 package com.koreait.BoardStudy.config;
 
 import com.koreait.BoardStudy.security.filter.JwtAuthenticationFilter;
+import com.koreait.BoardStudy.security.handler.OAuth2SuccessHandler;
+import com.koreait.BoardStudy.service.Oauth2PrincipalUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +20,13 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 public class SecurityConfig {
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
+
+    @Autowired
+    private Oauth2PrincipalUserService oauth2PrincipalUserService;
+
+    @Autowired
+    private OAuth2SuccessHandler oAuth2SuccessHandler;
+
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder(){
         return new BCryptPasswordEncoder();
@@ -51,9 +60,16 @@ public class SecurityConfig {
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         http.authorizeHttpRequests(auth -> {
-            auth.requestMatchers("/auth/**").permitAll();
+            auth.requestMatchers("/auth/**",
+                                        "/oauth2/**",
+                                         "/login/oauth2/**").permitAll();
             auth.anyRequest().authenticated();
         }); //특정 URL에 대한 설정
+
+        http.oauth2Login(oauth2 ->
+                oauth2.userInfoEndpoint(userInfo -> userInfo.userService(oauth2PrincipalUserService))
+                        .successHandler(oAuth2SuccessHandler)
+        );
 
         return http.build();
     }

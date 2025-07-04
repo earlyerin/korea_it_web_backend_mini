@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
-public class Oauth2User {
+public class OAuth2User {
     private Integer oauth2UserId;
     private Integer userId;
     private String provider;

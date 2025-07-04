@@ -5,10 +5,8 @@ import com.koreait.BoardStudy.repository.UserRepository;
 import com.koreait.BoardStudy.security.jwt.JwtUtils;
 import com.koreait.BoardStudy.security.model.PrincipalUser;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtException;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -29,7 +27,8 @@ public class JwtAuthenticationFilter implements Filter {
     @Autowired
     private JwtUtils jwtUtils;
 
-    @Autowired private UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
