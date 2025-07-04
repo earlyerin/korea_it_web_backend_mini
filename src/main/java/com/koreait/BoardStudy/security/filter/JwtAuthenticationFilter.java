@@ -43,7 +43,6 @@ public class JwtAuthenticationFilter implements Filter {
         }
 
         //토큰 인증
-        HttpServletResponse response = (HttpServletResponse) servletResponse;
         String authorization = request.getHeader("Authorization"); //Authorization 헤더에 담긴 토큰 저장
         if(jwtUtils.isBearer(authorization)){
             String accessToken = jwtUtils.removeBearer(authorization);
@@ -65,11 +64,7 @@ public class JwtAuthenticationFilter implements Filter {
                 }, () -> { throw new AuthenticationServiceException("인증 실패");
                     //AuthenticationServiceException : 인증 처리 과정에서 발생하는 예외
                 });
-            } catch (IllegalArgumentException  | JwtException e){
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); //응답상태 : 401
-                response.setContentType("application/json;charset=UTF=8"); //본문 타입 명시 : JSON
-                response.getWriter().write("{\"error\": \"Invalid or expired token\"}"); //응답바디 : 에러 메세지 (JSON 형식으로 작성)
-            }catch (RuntimeException e){
+            } catch (RuntimeException e){
                 e.printStackTrace();
             }
         }

@@ -29,7 +29,7 @@
         INSERT INTO
             user_tb
         VALUES
-            (0, #{user_name}, #{password}, #{user_email}, now(), null);
+            (0, #{userName}, #{password}, #{userEmail}, now(), null);
     </insert>
     <select id="getUserByUserId" resultMap="UserResultMap">
         SELECT

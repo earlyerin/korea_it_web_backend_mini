@@ -1,5 +1,6 @@
 package com.koreait.BoardStudy.controller;
 
+import com.koreait.BoardStudy.dto.auth.SigninReqDto;
 import com.koreait.BoardStudy.dto.auth.SignupReqDto;
 import com.koreait.BoardStudy.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,5 +20,10 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody SignupReqDto signupReqDto){
         return ResponseEntity.ok(authService.signup(signupReqDto));
+    }
+
+    @PostMapping("/signin")
+    public ResponseEntity<?> signin(@RequestBody SigninReqDto signinReqDto){
+        return ResponseEntity.ok(authService.signin(signinReqDto));
     }
 }
