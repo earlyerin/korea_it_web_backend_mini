@@ -28,8 +28,13 @@ public class AuthService {
 
     @Autowired
     private JwtUtils jwtUtils;
-    /*
 
+    /*
+    @Transactional
+    - RuntimeException 및 하위 예외에 발생 시 ROLLBACK
+    - "rollbackFor = Exception.class"을 작성하면 Exception 발생 시에도 ROLLBACK (모든 예외 상황에 대해 적용)
+    - 메서드 내 DB 작업을 하나의 트랜젝션으로 취급하여 모두 성공하거나 실패하도록 설정
+    - 예외 처리 구문 필수로 작성
      */
     @Transactional(rollbackFor = Exception.class)
     public ApiRespDto<?> signup(SignupReqDto signupReqDto){

@@ -27,7 +27,7 @@ public class PrincipalUser implements UserDetails {
         return userRoles.stream().map(userRole
                 -> new SimpleGrantedAuthority(userRole.getRole().getRoleName()))
                 .collect(Collectors.toList());
-        //부여된 권한으로 객체를 생성하고 리스트에 담아서 반환
+        //부여된 권한에 대해 객체를 생성하고 리스트에 담아서 반환
     }
 
     @Override

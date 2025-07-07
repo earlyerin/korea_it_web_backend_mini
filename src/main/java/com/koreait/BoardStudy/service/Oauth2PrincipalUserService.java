@@ -15,13 +15,16 @@ import java.util.Map;
 public class Oauth2PrincipalUserService extends DefaultOAuth2UserService {
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+        /*
+         OAuth2로 로그인한 사용자 정보 파싱 및 저장
+         */
         OAuth2User oAuth2User = super.loadUser(userRequest);
         Map<String, Object> attributes = oAuth2User.getAttributes();
         String provider = userRequest.getClientRegistration().getRegistrationId();
         String email = null;
         String id = null;
 
-        //공급자
+        //공급자 분기문
         switch (provider){
             case "google" :
                 id = attributes.get("sub").toString();
@@ -35,11 +38,12 @@ public class Oauth2PrincipalUserService extends DefaultOAuth2UserService {
             case "kakao":
                 id = attributes.get("id").toString();
                 Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
-                email = "rin050301@gmail.com"; //
+                email = "rin050301@gmail.com";
+                //카카오 개발자 센터 -> 동의 항목에서 앱 권한 신청 후 사용자 이메일 요청가능
                 break;
         }
 
-        //정보 저장
+        //사용자 정보
         Map<String, Object> newAttributes = Map.of(
                 "id", id,
                 "email", email,
