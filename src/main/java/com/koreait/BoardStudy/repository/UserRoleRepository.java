@@ -16,4 +16,12 @@ public class UserRoleRepository {
     public int addUserRole(UserRole userRole){
         return userRoleMapper.addUserRole(userRole);
     }
+
+    public Optional<UserRole> getUserRoleByUserIdAndRoleId(Integer userId, Integer roleId){
+        return userRoleMapper.getUserRoleByUserIdAndRoleId(userId, roleId);
+    }
+
+    public int updateRoleId(Integer userRoleId, Integer userId){
+        return userRoleMapper.updateRoleId(userRoleId, userId);
+    }
 }

@@ -55,4 +55,13 @@ public class JwtUtils {
         return jwtParser.parseSignedClaims(token) //토큰 파싱 및 서명 검증(예외 처리 필요)
                 .getPayload();
     }
+
+    public String generateVerifyToken(String id){
+        return Jwts.builder()
+                .subject("VerifyToken")
+                .id(id)
+                .expiration(new Date(new Date().getTime() + (1000L * 60L * 3L)))
+                .signWith(KEY)
+                .compact();
+    }
 }

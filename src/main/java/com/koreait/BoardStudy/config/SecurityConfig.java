@@ -62,7 +62,8 @@ public class SecurityConfig {
         http.authorizeHttpRequests(auth -> {
             auth.requestMatchers("/auth/**",
                                         "/oauth2/**",
-                                         "/login/oauth2/**").permitAll();
+                                         "/login/oauth2/**",
+                                        "/mail/verify").permitAll();
             auth.anyRequest().authenticated();
         }); //특정 URL에 대한 설정
 

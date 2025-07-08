@@ -44,11 +44,11 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         //클라이언트와 연동 확인
         Optional<OAuth2User> optionalOAuth2User = oauth2UserRepository
                 .getOAuth2UserByProviderAndProviderUserId(provider, providerUserId);
-        System.out.println(optionalOAuth2User);
+        //공백이 인코딩되어 %20으로 DB 저장..
         if(optionalOAuth2User.isEmpty()){
             response.sendRedirect("http://localhost:3000/auth/oauth2?provider="
                     + provider + "&providerUserId=" + providerUserId + " &email=" + email);
-            //OAuth2로 회원가입 또는 연동 필요
+            //회원가입 또는 연동 필요
             return;
         }
 
