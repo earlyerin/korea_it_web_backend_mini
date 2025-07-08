@@ -10,6 +10,15 @@
         <result property="userId" column="bt_user_id" />
         <result property="regDt" column="bt_reg_dt" />
         <result property="updDt" column="bt_upd_dt" />
+        <association property="user" resultMap="UserResultMap" />
+    </resultMap>
+    <resultMap id="UserResultMap" type="com.koreait.BoardStudy.entity.User">
+        <id property="userId" column="user_id" />
+        <result property="userName" column="user_name" />
+        <result property="password" column="password" />
+        <result property="userEmail" column="user_email" />
+        <result property="regDt" column="reg_dt" />
+        <result property="updDt" column="upd_dt" />
     </resultMap>
     <insert id="addBoard">
         INSERT INTO
@@ -19,21 +28,33 @@
     </insert>
     <select id="getBoardByBoardId" resultMap="BoardResultMap">
         SELECT
-        bt.title,
-        bt.content,
-        bt.reg_dt,
-        bt.upd_dt,
+            bt.board_id,
+            bt.title,
+            bt.content,
+            bt.user_id AS bt_user_id,
+            bt.reg_dt AS bt_reg_dt,
+            bt.upd_dt AS bt_upd_dt,
 
-        ut.user_name
+            ut.user_id,
+            ut.user_name,
+            ut.password,
+            ut.user_email,
+            ut.reg_dt,
+            ut.upd_dt
         FROM
-        user_tb AS ut
-        LEFT JOIN board_tb AS bt ON (ut.user_id = bt.user_id)
+            user_tb AS ut
+            LEFT JOIN board_tb AS bt ON (ut.user_id = bt.user_id)
         WHERE
-        board_id =${boardId};
+            board_id = #{boardId};
     </select>
     <select id="getBoardList" resultMap="BoardResultMap">
         SELECT
-            *
+            bt.board_id,
+            bt.title,
+            bt.content,
+            bt.user_id AS bt_user_id,
+            bt.reg_dt AS bt_reg_dt,
+            bt.upd_dt AS bt_upd_dt
         FROM
             board_tb;
     </select>

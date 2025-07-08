@@ -1,24 +1,19 @@
-package com.koreait.BoardStudy.entity;
+package com.koreait.BoardStudy.dto.board;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.koreait.BoardStudy.entity.Board;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Data
-@Builder
 @AllArgsConstructor
-@NoArgsConstructor
-public class Board {
-    private Integer boardId;
+@Builder
+public class BoardRespDto {
     private String title;
     private String content;
-    private Integer userId;
+    private String userName;
     private LocalDateTime regDt;
     private LocalDateTime updDt;
-
-    private User user;
 }

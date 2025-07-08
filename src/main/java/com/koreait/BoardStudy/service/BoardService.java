@@ -2,6 +2,7 @@ package com.koreait.BoardStudy.service;
 
 import com.koreait.BoardStudy.dto.ApiRespDto;
 import com.koreait.BoardStudy.dto.board.AddBoardReqDto;
+import com.koreait.BoardStudy.dto.board.BoardRespDto;
 import com.koreait.BoardStudy.entity.Board;
 import com.koreait.BoardStudy.entity.User;
 import com.koreait.BoardStudy.repository.BoardRepository;
@@ -42,7 +43,7 @@ public class BoardService {
             if(result == 0){
                 return new ApiRespDto<>("failed", "게시물 추가에 실패했습니다.", null);
             }
-            return new ApiRespDto<>("succenss", "게시물 추가를 완료했습니다.", null);
+            return new ApiRespDto<>("success", "게시물 추가를 완료했습니다.", null);
         } catch (Exception e) {
             return new ApiRespDto<>("failed", "서버오류로 게시물 춫가에 실패했습니다." + e.getMessage(), null);
         }
@@ -58,14 +59,14 @@ public class BoardService {
             return new ApiRespDto<>("failed", "해당 아이디의 게시물은 존재하지 않습니다.", null);
         }
         Board board = optionalBoard.get();
-
-        Optional<User> optionalUser = userRepository.getUserByUserId(board.getBoardId());
-        User user = optionalUser.get();
-        if(user.getUserName().isEmpty()){
-            return new ApiRespDto<>("failed", "게시물 작성자를 확인할 수 없습니다.", null);
-        }
-
-        return new ApiRespDto<>("success", "게시물 조회에 성공했습니다.", board);
+        BoardRespDto boardRespDto = BoardRespDto.builder()
+                .title(board.getTitle())
+                .content(board.getContent())
+                .userName(board.getUser().getUserName())
+                .regDt(board.getRegDt())
+                .updDt(board.getRegDt())
+                .build();
+        return new ApiRespDto<>("success", "게시물 조회에 성공했습니다.", boardRespDto);
     }
 
     public ApiRespDto<?> getBoardList(){
