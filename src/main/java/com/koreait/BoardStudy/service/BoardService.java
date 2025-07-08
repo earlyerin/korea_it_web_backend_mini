@@ -3,19 +3,25 @@ package com.koreait.BoardStudy.service;
 import com.koreait.BoardStudy.dto.ApiRespDto;
 import com.koreait.BoardStudy.dto.board.AddBoardReqDto;
 import com.koreait.BoardStudy.entity.Board;
+import com.koreait.BoardStudy.entity.User;
 import com.koreait.BoardStudy.repository.BoardRepository;
+import com.koreait.BoardStudy.repository.UserRepository;
 import com.koreait.BoardStudy.security.model.PrincipalUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.swing.text.html.Option;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class BoardService {
     @Autowired
     private BoardRepository boardRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Transactional(rollbackFor = Exception.class)
     public ApiRespDto<?> addBoard(AddBoardReqDto addBoardReqDto, PrincipalUser principalUser){
@@ -47,12 +53,28 @@ public class BoardService {
             return new ApiRespDto<>("failed", "유효하지 않는 게시물 아이디입니다.", null);
         }
 
-        Optional<Board> board = boardRepository.getBoardByBoardId(boardId);
-        if(board.isEmpty()){
+        Optional<Board> optionalBoard = boardRepository.getBoardByBoardId(boardId);
+        if(optionalBoard.isEmpty()){
             return new ApiRespDto<>("failed", "해당 아이디의 게시물은 존재하지 않습니다.", null);
         }
+        Board board = optionalBoard.get();
 
-        return new ApiRespDto<>("success", "게시물 조회에 성공했습니다.", board.get());
+        Optional<User> optionalUser = userRepository.getUserByUserId(board.getBoardId());
+        User user = optionalUser.get();
+        if(user.getUserName().isEmpty()){
+            return new ApiRespDto<>("failed", "게시물 작성자를 확인할 수 없습니다.", null);
+        }
+
+        return new ApiRespDto<>("success", "게시물 조회에 성공했습니다.", board);
+    }
+
+    public ApiRespDto<?> getBoardList(){
+        List<Board> boardList = boardRepository.getBoardList();
+        if(boardList.isEmpty()){
+            return new ApiRespDto<>("failed", "조회할 게시물이 존재하지 않습니다.", null);
+        }
+
+        return new ApiRespDto<>("success", "게시물 조회에 성공했습니다.", boardList);
     }
 
 

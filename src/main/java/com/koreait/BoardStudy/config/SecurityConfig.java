@@ -63,7 +63,8 @@ public class SecurityConfig {
             auth.requestMatchers("/auth/**",
                                         "/oauth2/**",
                                          "/login/oauth2/**",
-                                        "/mail/verify").permitAll();
+                                        "/mail/verify",
+                                        "/board/list").permitAll();
             auth.anyRequest().authenticated();
         }); //특정 URL에 대한 설정
 

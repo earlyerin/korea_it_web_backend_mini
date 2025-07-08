@@ -7,9 +7,9 @@
         <id property="boardId" column="board_id" />
         <result property="title" column="title" />
         <result property="content" column="content" />
-        <result property="userId" column="user_id" />
-        <result property="regDt" column="reg_dt" />
-        <result property="updDt" column="upd_dt" />
+        <result property="userId" column="bt_user_id" />
+        <result property="regDt" column="bt_reg_dt" />
+        <result property="updDt" column="bt_upd_dt" />
     </resultMap>
     <insert id="addBoard">
         INSERT INTO
@@ -19,10 +19,22 @@
     </insert>
     <select id="getBoardByBoardId" resultMap="BoardResultMap">
         SELECT
+        bt.title,
+        bt.content,
+        bt.reg_dt,
+        bt.upd_dt,
+
+        ut.user_name
+        FROM
+        user_tb AS ut
+        LEFT JOIN board_tb AS bt ON (ut.user_id = bt.user_id)
+        WHERE
+        board_id =${boardId};
+    </select>
+    <select id="getBoardList" resultMap="BoardResultMap">
+        SELECT
             *
         FROM
-            board_tb
-        WHERE
-            board_id = #{boardId};
+            board_tb;
     </select>
 </mapper>
