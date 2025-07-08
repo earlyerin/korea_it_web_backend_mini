@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.koreait.BoardStudy.mapper.BoardMapper">
+    <resultMap id="BoardResultMap" type="com.koreait.BoardStudy.entity.Board">
+        <id property="boardId" column="board_id" />
+        <result property="title" column="title" />
+        <result property="content" column="content" />
+        <result property="userId" column="user_id" />
+        <result property="regDt" column="reg_dt" />
+        <result property="updDt" column="upd_dt" />
+    </resultMap>
+    <insert id="addBoard">
+        INSERT INTO
+            board_tb
+        VALUES
+            (0, #{title}, #{content}, #{userId}, now(), null);
+    </insert>
+    <select id="getBoardByBoardId" resultMap="BoardResultMap">
+        SELECT
+            *
+        FROM
+            board_tb
+        WHERE
+            board_id = #{boardId};
+    </select>
+</mapper>

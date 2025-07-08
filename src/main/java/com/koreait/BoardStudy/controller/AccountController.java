@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/account")
-public class AccountController {
+public class AccountController { //계정 관리 담당
     @Autowired
     private AccountService accountService;
 
