@@ -44,7 +44,6 @@ public class Oauth2PrincipalUserService extends DefaultOAuth2UserService {
                 //카카오 개발자 센터 -> 동의 항목에서 앱 권한 신청 후 사용자 이메일 요청가능
                 break;
         }
-        System.out.println("providerUserId: " + id);
 
         //사용자 정보
         Map<String, Object> newAttributes = Map.of(

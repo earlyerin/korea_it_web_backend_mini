@@ -106,4 +106,13 @@
         WHERE
             ut.user_email = #{userEmail};
     </select>
+    <update id="updatePassword">
+        UPDATE
+            user_tb
+        SET
+            password = #{password},
+            upd_dt = now()
+        WHERE
+            user_id = #{userId};
+    </update>
 </mapper>
