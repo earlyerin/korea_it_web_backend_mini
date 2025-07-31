@@ -41,7 +41,7 @@ public class AuthService {
         //아이디 중복확인
         Optional<User> userByUserName = userRepository.getUserByUserName(signupReqDto.getUserName());
         if(userByUserName.isPresent()){
-            return new ApiRespDto<>("failed", "사용할 수 없는 아이디입니다.", null);
+            return new ApiRespDto<>("failed", "이미 사용중인 아이디입니다.", null);
         }
         //이메일 중복확인
         Optional<User> userByUserEmail = userRepository.getUserByUserEmail(signupReqDto.getUserEmail());

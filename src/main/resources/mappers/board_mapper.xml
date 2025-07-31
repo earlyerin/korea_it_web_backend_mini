@@ -49,12 +49,12 @@
     </select>
     <select id="getBoardList" resultMap="BoardResultMap">
         SELECT
-            bt.board_id,
-            bt.title,
-            bt.content,
-            bt.user_id AS bt_user_id,
-            bt.reg_dt AS bt_reg_dt,
-            bt.upd_dt AS bt_upd_dt
+            board_id,
+            title,
+            content,
+            user_id AS bt_user_id,
+            reg_dt AS bt_reg_dt,
+            upd_dt AS bt_upd_dt
         FROM
             board_tb;
     </select>
