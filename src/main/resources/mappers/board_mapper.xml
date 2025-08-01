@@ -20,7 +20,7 @@
         <result property="regDt" column="reg_dt" />
         <result property="updDt" column="upd_dt" />
     </resultMap>
-    <insert id="addBoard">
+    <insert id="addBoard" useGeneratedKeys="true" keyProperty="boardId">
         INSERT INTO
             board_tb
         VALUES

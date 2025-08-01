@@ -87,7 +87,7 @@ public class AuthService {
 
         //토큰 반환
         String accessToken = jwtUtils.generateAccessToken(user.getUserId().toString());
-        return new ApiRespDto<>("success", "로그인이 완료되었습니니다.", accessToken);
+        return new ApiRespDto<>("success", "로그인이 완료되었습니다.", accessToken);
     }
 
 }

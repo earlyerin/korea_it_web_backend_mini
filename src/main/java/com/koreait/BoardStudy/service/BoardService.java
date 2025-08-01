@@ -39,11 +39,11 @@ public class BoardService {
         }
 
         try {
-            int result = boardRepository.addBoard(addBoardReqDto.toEntity());
-            if(result == 0){
+            Optional<Board> optionalBoard = boardRepository.addBoard(addBoardReqDto.toEntity());
+            if(optionalBoard.isEmpty()){
                 return new ApiRespDto<>("failed", "게시물 추가에 실패했습니다.", null);
             }
-            return new ApiRespDto<>("success", "게시물 추가를 완료했습니다.", null);
+            return new ApiRespDto<>("success", "게시물 추가를 완료했습니다.", optionalBoard.get().getBoardId());
         } catch (Exception e) {
             return new ApiRespDto<>("failed", "서버오류로 게시물 춫가에 실패했습니다." + e.getMessage(), null);
         }
@@ -60,6 +60,7 @@ public class BoardService {
         }
         Board board = optionalBoard.get();
         BoardRespDto boardRespDto = BoardRespDto.builder()
+                .boardId(board.getBoardId())
                 .title(board.getTitle())
                 .content(board.getContent())
                 .userName(board.getUser().getUserName())
