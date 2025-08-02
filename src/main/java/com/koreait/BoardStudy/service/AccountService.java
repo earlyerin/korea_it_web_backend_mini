@@ -2,6 +2,7 @@ package com.koreait.BoardStudy.service;
 
 import com.koreait.BoardStudy.dto.ApiRespDto;
 import com.koreait.BoardStudy.dto.account.ChangePasswordReqDto;
+import com.koreait.BoardStudy.dto.account.FindIdRespDto;
 import com.koreait.BoardStudy.entity.User;
 import com.koreait.BoardStudy.repository.UserRepository;
 import com.koreait.BoardStudy.security.model.PrincipalUser;
@@ -55,5 +56,28 @@ public class AccountService {
         }
 
         return new ApiRespDto<>("success", "비밀번호 변경이 완료되었습니다.", null);
+    }
+
+    public ApiRespDto<?> findUserId(String userEmail){
+        Optional<User> optionalUser = userRepository.getUserByUserEmail(userEmail);
+        if (optionalUser.isEmpty()){
+            return new ApiRespDto<>("failed", "사용자 정보를 찾을 수 없습니다.", null);
+        }
+        User user = optionalUser.get();
+        FindIdRespDto findIdRespDto = FindIdRespDto.builder()
+                .userName(user.getUserName())
+                .regDt(user.getRegDt())
+                .build();
+        return new ApiRespDto<>("success", "Find User!!", findIdRespDto);
+    }
+
+    public ApiRespDto<?> getUserInfo(Integer userId){
+        Optional<User> optionalUser = userRepository.getUserByUserId(userId);
+        if(optionalUser.isEmpty()){
+            return new ApiRespDto<>("failed", "사용자 정보를 찾을 수 없습니다.",null);
+        }
+        User user = optionalUser.get();
+        return new ApiRespDto<>("success", "Get User!!", user);
+
     }
 }

@@ -19,4 +19,14 @@ public class AccountController { //계정 관리 담당
                                             @AuthenticationPrincipal PrincipalUser principalUser){
         return ResponseEntity.ok(accountService.updatePassword(changePasswordReqDto, principalUser));
     }
+
+    @GetMapping("/find/id/{userEmail}")
+    public ResponseEntity<?> findUserId(@PathVariable String userEmail){
+        return ResponseEntity.ok(accountService.findUserId(userEmail));
+    }
+
+    @GetMapping("/get/{userId}")
+    public ResponseEntity<?> getUserInfo(@PathVariable Integer userId){
+        return ResponseEntity.ok(accountService.getUserInfo(userId));
+    }
 }

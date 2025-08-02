@@ -60,10 +60,12 @@ public class SecurityConfig {
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         http.authorizeHttpRequests(auth -> {
-            auth.requestMatchers("/auth/**",
+            auth.requestMatchers("/auth/signup",
+                                        "/auth/signin",
                                         "/oauth2/**",
                                          "/login/oauth2/**",
-                                        "/mail/verify"
+                                        "/mail/verify",
+                                        "/account/find/id/**"
                                         ).permitAll();
             auth.anyRequest().authenticated();
         }); //특정 URL에 대한 설정
