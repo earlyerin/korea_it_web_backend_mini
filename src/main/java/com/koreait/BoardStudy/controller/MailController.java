@@ -31,4 +31,15 @@ public class MailController {
         model.addAllAttributes(resultMap);
         return "result_page";
     }
+
+    @PostMapping("/send/find/password")
+    public ResponseEntity<?> sendToken(@RequestBody SendMailReqDto sendMailReqDto,
+                                      @AuthenticationPrincipal PrincipalUser principalUser){
+        return ResponseEntity.ok(mailService.sendToken(sendMailReqDto, principalUser));
+    }
+
+    @GetMapping("/verify/find/password/{verifyToken}")
+    public ResponseEntity<?> verifyToken(@PathVariable String verifyToken){
+        return ResponseEntity.ok(mailService.verifyToken(verifyToken));
+    }
 }

@@ -64,8 +64,8 @@ public class SecurityConfig {
                                         "/auth/signin",
                                         "/oauth2/**",
                                          "/login/oauth2/**",
-                                        "/mail/verify",
-                                        "/account/find/id/**"
+                                        "/mail/verify/**",
+                                        "/account/find/**"
                                         ).permitAll();
             auth.anyRequest().authenticated();
         }); //특정 URL에 대한 설정
