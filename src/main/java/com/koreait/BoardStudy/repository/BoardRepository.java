@@ -14,6 +14,7 @@ import java.util.Optional;
 public class BoardRepository {
     @Autowired
     private BoardMapper boardMapper;
+
     public Optional<Board> addBoard(Board board){
         try{
             int result = boardMapper.addBoard(board);
@@ -24,6 +25,14 @@ public class BoardRepository {
             return Optional.empty();
         }
         return Optional.of(board);
+    }
+
+    public int removeBoardByBoardId(Integer boardId){
+        return boardMapper.removeBoardByBoardId(boardId);
+    }
+
+    public int updateBoardByBoardId(Board board){
+        return boardMapper.updateBoardByBoardId(board);
     }
 
     public Optional<Board> getBoardByBoardId(Integer boardId){

@@ -58,4 +58,20 @@
         FROM
             board_tb;
     </select>
+    <delete id="removeBoardByBoardId">
+        DELETE FROM
+            board_tb
+        WHERE
+            board_id = #{boardId};
+    </delete>
+    <update id="updateBoardByBoardId">
+        UPDATE
+            board_tb
+        SET
+            title = #{title},
+            content = #{content},
+            upd_dt = now()
+        WHERE
+            board_id = #{boardId}
+    </update>
 </mapper>

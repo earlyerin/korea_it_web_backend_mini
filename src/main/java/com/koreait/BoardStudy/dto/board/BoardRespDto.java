@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class BoardRespDto {
+    private Integer userId;
     private Integer boardId;
     private String title;
     private String content;
