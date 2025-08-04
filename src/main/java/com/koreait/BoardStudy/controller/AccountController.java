@@ -1,6 +1,7 @@
 package com.koreait.BoardStudy.controller;
 
 import com.koreait.BoardStudy.dto.account.ChangePasswordReqDto;
+import com.koreait.BoardStudy.dto.account.ChangeUserNameReqDto;
 import com.koreait.BoardStudy.dto.account.FindPasswordReqDto;
 import com.koreait.BoardStudy.dto.account.UpdatePasswordReqDto;
 import com.koreait.BoardStudy.security.model.PrincipalUser;
@@ -22,6 +23,11 @@ public class AccountController { //계정 관리 담당
         return ResponseEntity.ok(accountService.changePassword(changePasswordReqDto, principalUser));
     }
 
+    @PostMapping("change/username/authentication/user")
+    public ResponseEntity<?> changeUserName(@RequestBody ChangeUserNameReqDto changeUserNameReqDto,
+                                            @AuthenticationPrincipal PrincipalUser principalUser){
+        return ResponseEntity.ok(accountService.changeUserName(changeUserNameReqDto, principalUser));
+    }
     @GetMapping("/find/id/{userEmail}")
     public ResponseEntity<?> findUserId(@PathVariable String userEmail){
         return ResponseEntity.ok(accountService.findUserId(userEmail));

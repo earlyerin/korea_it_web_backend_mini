@@ -1,16 +1,12 @@
 package com.koreait.BoardStudy.service;
 
 import com.koreait.BoardStudy.dto.ApiRespDto;
-import com.koreait.BoardStudy.dto.account.ChangePasswordReqDto;
-import com.koreait.BoardStudy.dto.account.FindIdRespDto;
-import com.koreait.BoardStudy.dto.account.FindPasswordReqDto;
-import com.koreait.BoardStudy.dto.account.UpdatePasswordReqDto;
+import com.koreait.BoardStudy.dto.account.*;
 import com.koreait.BoardStudy.entity.User;
 import com.koreait.BoardStudy.repository.UserRepository;
 import com.koreait.BoardStudy.security.jwt.JwtUtils;
 import com.koreait.BoardStudy.security.model.PrincipalUser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -64,6 +60,7 @@ public class AccountService {
         return new ApiRespDto<>("success", "비밀번호 변경이 완료되었습니다.", null);
     }
 
+
     //아이디 찾기
     public ApiRespDto<?> findUserId(String userEmail){
         Optional<User> optionalUser = userRepository.getUserByUserEmail(userEmail);
@@ -104,6 +101,34 @@ public class AccountService {
         User user = optionalUser.get();
         return new ApiRespDto<>("success", "Get User!!", user);
 
+    }
+
+    //아이디 변경
+    public ApiRespDto<?> changeUserName(ChangeUserNameReqDto changeUserNameReqDto,
+                                        PrincipalUser principalUser){
+        //사용자 정보 확인
+        Optional<User> userByUserId = userRepository.getUserByUserId(changeUserNameReqDto.getUserId());
+        if(userByUserId.isEmpty()){
+            return new ApiRespDto<>("failed", "잘못된 요청입니다.", null);
+        }
+
+        //토큰 인증이 필요한 요청이므로 현재 로그인한 사용자와 비밀번호 변경 요청한 사용자가 일치하는지 확인
+        if(!changeUserNameReqDto.getUserId().equals(principalUser.getUserId())){
+            return new ApiRespDto<>("failed", "잘못된 요청입니다.", null);
+        }
+
+        //기존의 아이디와 새로운 아이디가 일치하는지 확인
+        User user = userByUserId.get();
+        if(user.getUserName().equals(changeUserNameReqDto.getUserName())){
+            return new ApiRespDto<>("failed", "새로운 아이디는 기존의 아이디와 달라야합니다.", null);
+        }
+        
+        int result = userRepository.updateUserName(changeUserNameReqDto.toEntity());
+        if(result == 0){
+            return new ApiRespDto<>("failed", "아이디 변경에 실패했습니다.", null);
+        }
+
+        return new ApiRespDto<>("success", "아이디 변경이 완료되었습니다.", null);
     }
 
     //비밀번호 변경(비밀번호 찾기 중인 사용자)

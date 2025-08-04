@@ -115,4 +115,13 @@
         WHERE
             user_id = #{userId};
     </update>
+    <update id="updateUserName">
+        UPDATE
+            user_tb
+        SET
+            user_name = #{userName},
+            upd_dt = now()
+        WHERE
+            user_id = #{userId};
+    </update>
 </mapper>

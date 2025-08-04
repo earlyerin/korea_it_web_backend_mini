@@ -154,6 +154,7 @@ public class MailService {
         }catch (ExpiredJwtException e){
             return new ApiRespDto<>("failed", "만료된 인증 토큰입니다. \n인증 메일을 다시 요청하세요.", null);
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return new ApiRespDto<>("failed", "잘못된 요청입니다. \n인증 메일을 다시 요청하세요.", null);
         }
     }
