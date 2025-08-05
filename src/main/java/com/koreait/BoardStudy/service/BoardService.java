@@ -98,7 +98,7 @@ public class BoardService {
             if(result == 0){
                 return new ApiRespDto<>("failed", "게시물 수정에 실패했습니다.", null);
             }
-            return new ApiRespDto<>("success", "게시물 수정를 완료했습니다.", result);
+            return new ApiRespDto<>("success", "게시물 수정를 완료했습니다.", newBoard.getBoardId());
         } catch (Exception e) {
             return new ApiRespDto<>("failed", "서버오류로 게시물 수정에 실패했습니다." + e.getMessage(), null);
         }
