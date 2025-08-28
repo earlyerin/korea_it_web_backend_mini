@@ -56,7 +56,9 @@
             reg_dt AS bt_reg_dt,
             upd_dt AS bt_upd_dt
         FROM
-            board_tb;
+            board_tb
+        ORDER BY
+            reg_dt DESC;
     </select>
     <delete id="removeBoardByBoardId">
         DELETE FROM

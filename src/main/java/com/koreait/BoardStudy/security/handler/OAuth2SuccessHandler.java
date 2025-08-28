@@ -46,7 +46,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
                 .getOAuth2UserByProviderAndProviderUserId(provider, providerUserId);
         //공백이 인코딩되어 %20으로 DB 저장..
         if(optionalOAuth2User.isEmpty()){
-            response.sendRedirect("http://localhost:3000/auth/oauth2?provider="
+            response.sendRedirect("http://localhost:5173/auth/oauth2?provider="
                     + provider + "&providerUserId=" + providerUserId + " &email=" + email);
             //회원가입 또는 연동 필요
             return;
@@ -60,7 +60,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
             accessToken = jwtUtils.generateAccessToken(optionalUser.get().getUserId().toString());
         }
 
-        response.sendRedirect("http://localhost:3000/auth/oauth2/signin?accessToken=" + accessToken);
-        //이메일 인증 또는 연동 진행
+        response.sendRedirect("http://localhost:5173/auth/oauth2/signin?accessToken=" + accessToken);
+        //이메일 인증 진행
     }
 }
