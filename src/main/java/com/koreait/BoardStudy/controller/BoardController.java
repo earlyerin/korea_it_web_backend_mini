@@ -32,7 +32,7 @@ public class BoardController {
         return ResponseEntity.ok((boardService.updateBoardByBoardId(updateBoardReqDto)));
     }
     @GetMapping("/{boardId}")
-    public ResponseEntity<?> getBoardByyBoardId(@PathVariable Integer boardId){
+    public ResponseEntity<?> getBoardByBoardId(@PathVariable Integer boardId){
         return ResponseEntity.ok(boardService.getBoardByBoardId(boardId));
     }
 
