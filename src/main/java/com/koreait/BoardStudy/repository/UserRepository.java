@@ -45,4 +45,8 @@ public class UserRepository {
     public int updateUserName(User user){
         return userMapper.updateUserName(user);
     }
+
+    public int updateProfileImg(User user){
+        return userMapper.updateProfileImg(user);
+    }
 }

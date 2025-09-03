@@ -14,4 +14,5 @@ public interface UserMapper {
     Optional<User> getUserByUserEmail(String userEmail);
     int updatePassword(User user);
     int updateUserName(User user);
+    int updateProfileImg(User user);
 }

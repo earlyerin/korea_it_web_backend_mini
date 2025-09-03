@@ -61,6 +61,26 @@ public class AccountService {
     }
 
 
+    public ApiRespDto<?> changeProfileImg(ChangeProfileImgReqDto changeProfileImgReqDto,
+                                          PrincipalUser principalUser) {
+        Optional<User> getUserByUserId = userRepository.getUserByUserId(changeProfileImgReqDto.getUserId());
+        if(getUserByUserId.isEmpty()){
+            return new ApiRespDto<>("failed", "존재하지 않는 사용자입니다.", null);
+        }
+
+        if(!changeProfileImgReqDto.getUserId().equals(principalUser.getUserId())){
+            return new ApiRespDto<>("failed", "잘못된 요청입니다.", null);
+        }
+
+        int result = userRepository.updateProfileImg(changeProfileImgReqDto.toEntity());
+        if(result == 0){
+            return new ApiRespDto<>("failed", "프로필 이미지 변경을 실패했습니다.",null);
+        }
+
+        return new ApiRespDto<>("success", "프로필 이미지 변경이 완료되었습니다.", null);
+    }
+
+
     //아이디 찾기
     public ApiRespDto<?> findUserId(String userEmail){
         Optional<User> optionalUser = userRepository.getUserByUserEmail(userEmail);
@@ -162,4 +182,5 @@ public class AccountService {
 
         return new ApiRespDto<>("success", "비밀번호 변경이 완료되었습니다.", null);
     }
+
 }

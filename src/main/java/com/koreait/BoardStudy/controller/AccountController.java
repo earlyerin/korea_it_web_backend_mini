@@ -1,9 +1,6 @@
 package com.koreait.BoardStudy.controller;
 
-import com.koreait.BoardStudy.dto.account.ChangePasswordReqDto;
-import com.koreait.BoardStudy.dto.account.ChangeUserNameReqDto;
-import com.koreait.BoardStudy.dto.account.FindPasswordReqDto;
-import com.koreait.BoardStudy.dto.account.UpdatePasswordReqDto;
+import com.koreait.BoardStudy.dto.account.*;
 import com.koreait.BoardStudy.security.model.PrincipalUser;
 import com.koreait.BoardStudy.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +18,12 @@ public class AccountController { //계정 관리 담당
     public ResponseEntity<?> changePassword(@RequestBody ChangePasswordReqDto changePasswordReqDto,
                                             @AuthenticationPrincipal PrincipalUser principalUser){
         return ResponseEntity.ok(accountService.changePassword(changePasswordReqDto, principalUser));
+    }
+
+    @PostMapping("/change/profileImg")
+    public ResponseEntity<?> changeProfileImg(@RequestBody ChangeProfileImgReqDto changeProfileImgReqDto,
+                                              @AuthenticationPrincipal PrincipalUser principalUser){
+        return ResponseEntity.ok(accountService.changeProfileImg(changeProfileImgReqDto, principalUser));
     }
 
     @PostMapping("change/username/authentication/user")

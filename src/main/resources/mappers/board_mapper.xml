@@ -17,6 +17,7 @@
         <result property="userName" column="user_name" />
         <result property="password" column="password" />
         <result property="userEmail" column="user_email" />
+        <result property="profileImg" column="profile_img" />
         <result property="regDt" column="reg_dt" />
         <result property="updDt" column="upd_dt" />
     </resultMap>
@@ -39,6 +40,7 @@
             ut.user_name,
             ut.password,
             ut.user_email,
+            ut.profile_img,
             ut.reg_dt,
             ut.upd_dt
         FROM

@@ -21,6 +21,7 @@
         <result property="userName" column="user_name" />
         <result property="password" column="password" />
         <result property="userEmail" column="user_email" />
+        <result property="profileImg" column="profile_img" />
         <result property="regDt" column="reg_dt" />
         <result property="updDt" column="upd_dt" />
         <collection property="userRoles" resultMap="UserRoleResultMap" />
@@ -29,7 +30,7 @@
         INSERT INTO
             user_tb
         VALUES
-            (0, #{userName}, #{password}, #{userEmail}, now(), null);
+            (0, #{userName}, #{password}, #{userEmail}, 'https://firebasestorage.googleapis.com/v0/b/board-23abf.firebasestorage.app/o/profile-img%2Fuser-blue-gradient_78370-4692.avif?alt=media&amp;token=3ecad03c-74ad-4b66-89b1-1155b4a2135e', now(), null);
     </insert>
     <select id="getUserByUserId" resultMap="UserResultMap">
         SELECT
@@ -37,6 +38,7 @@
             ut.user_name,
             ut.password,
             ut.user_email,
+            ut.profile_img,
             ut.reg_dt,
             ut.upd_dt,
 
@@ -62,6 +64,7 @@
             ut.user_name,
             ut.password,
             ut.user_email,
+            ut.profile_img,
             ut.reg_dt,
             ut.upd_dt,
 
@@ -87,6 +90,7 @@
             ut.user_name,
             ut.password,
             ut.user_email,
+            ut.profile_img,
             ut.reg_dt,
             ut.upd_dt,
 
@@ -123,5 +127,14 @@
             upd_dt = now()
         WHERE
             user_id = #{userId};
+    </update>
+    <update id="updateProfileImg">
+        UPDATE
+            user_tb
+        SET
+            profile_img = #{profileImg},
+            upd_dt = now()
+        WHERE
+            user_id = #{userId}
     </update>
 </mapper>
